@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="styles/divDataset.css">
+        <link rel="stylesheet" href="styles/styles.css">
+        <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+        <title></title>
+    </head>
+    <body>
+        <div id="headerDiv">
+            <h1>Data Graphing Tool</h1>
+            <h3><a href="index.html">Home</a> |
+                 <a href="DatasetView.html">Data View</a> |
+                  <a href="GraphView.html">Graph View</a></h3>
+        </div>
+        <div id="datasetList">
+            <h2>Test</h2>
+            <select id="datasetListBox" size="5">
+            </select>
+        </div>
+        <div id="tableView">
+            <form>
+            <table id="DatasetEditor">
+                <tr>
+                    <td>
+                        <p>Dataset Name</p>
+                    </td>
+                    <td>
+                        <input type="text" id="DatasetName">
+                    </td>
+                    <td> <input type="file" name="" id="fileIn"> </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Dataset Description</p>
+                    </td>
+                    <td>
+                        <textarea name="" id="DatasetDescription" cols="30" rows="5"></textarea>
+                    </td>
+                    <td>
+                        <input type="button" value="Save">
+                        <input type="button" value="Delete">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <script>
+            let datasets = [];
+            const addDataset = (ev)=>(
+                ev.preventDefault();
+                let
+            )
+            import {Dataset} from 'scripts/dataset.js';
+            const newDataset = (ev)new Dataset(document.querySelector)
+        </script>
+        </div>
+        <div id="columnView">
+            <div id="columnViewHeader">
+                <p>Column Name</p>
+            </div>
+            <div id="columnViewDatasets">
+                <p>Datasets</p>
+                <select id="datasetColumnBox" size="5">
+                    <option value="1">Item #1</option>
+                    <option value="2">Item #2</option>
+                    <option value="3">Item #3</option>
+                </select>
+                <input type="button" value="Select">
+            </div>
+            <div id="columnViewColumns">
+                <p>Columns</p>
+                <select id="columnBox" size="5">
+                    <option value="1">Item #1</option>
+                    <option value="2">Item #2</option>
+                    <option value="3">Item #3</option>
+                </select>
+                <input type="button" value="Select">
+            </div>
+        </div>
+    </body>
+</html>
