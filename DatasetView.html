@@ -2,7 +2,14 @@
     <head>
         <link rel="stylesheet" href="styles/divDataset.css">
         <link rel="stylesheet" href="styles/styles.css">
-        <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+        <script type="module" src="node_modules/xlsx/xlsx.mjs">
+            import { read, writeFileXLSX } from "xlsx";
+
+            /* load the codepage support library for extended support with older formats  */
+            import { set_cptable } from "xlsx";
+            import * as cptable from 'xlsx/dist/cpexcel.full.mjs';
+            set_cptable(cptable);
+        </script>
         <title></title>
     </head>
     <body>
@@ -27,31 +34,17 @@
                     <td>
                         <input type="text" id="DatasetName">
                     </td>
-                    <td> <input type="file" name="" id="fileIn"> </td>
                 </tr>
                 <tr>
+                    <td> <input type="file" name="" id="fileIn"> </td>
                     <td>
-                        <p>Dataset Description</p>
-                    </td>
-                    <td>
-                        <textarea name="" id="DatasetDescription" cols="30" rows="5"></textarea>
-                    </td>
-                    <td>
-                        <input type="button" value="Save">
-                        <input type="button" value="Delete">
+                        <input type="button" value="Save" id="saveDatasetBtn" onclick="addDataset()">
+                        <input type="button" value="Delete" id="clearDatasetBtn" onclick="clearForm()">
                     </td>
                 </tr>
             </table>
+            <div id="tableObject"></div>
         </form>
-        <script>
-            let datasets = [];
-            const addDataset = (ev)=>(
-                ev.preventDefault();
-                let
-            )
-            import {Dataset} from 'scripts/dataset.js';
-            const newDataset = (ev)new Dataset(document.querySelector)
-        </script>
         </div>
         <div id="columnView">
             <div id="columnViewHeader">
@@ -59,22 +52,45 @@
             </div>
             <div id="columnViewDatasets">
                 <p>Datasets</p>
-                <select id="datasetColumnBox" size="5">
-                    <option value="1">Item #1</option>
-                    <option value="2">Item #2</option>
-                    <option value="3">Item #3</option>
+                <select id="datasetSelectBox" size="5">
                 </select>
                 <input type="button" value="Select">
             </div>
             <div id="columnViewColumns">
                 <p>Columns</p>
                 <select id="columnBox" size="5">
-                    <option value="1">Item #1</option>
-                    <option value="2">Item #2</option>
-                    <option value="3">Item #3</option>
                 </select>
                 <input type="button" value="Select">
             </div>
         </div>
+        <script>
+            var wb = xlsx.readFile('files/File1.xlsx');
+            var ws = wb.Sheets("Sheet1");
+
+            console.log(ws)
+            var datasets = [];
+            var datasetListSelect = document.getElementById("datasetListBox");
+            var datasetSelectBox = document.getElementById("datasetSelectBox")
+            var count = 0;
+            function addDataset() {
+                let dataset = {
+                    id: count,
+                    datasetName: document.getElementById("DatasetName").value,
+                    filePath: document.getElementById('fileIn').value
+                }
+                datasets.push(dataset);
+                localStorage.setItem('datasetFilePaths', JSON.stringify(datasets));
+                document.forms[0].reset();
+                var option = document.createElement("option")
+                option.text = dataset.datasetName;
+                datasetListSelect.add(option, count);
+                datasetSelectBox.add(option, count);
+                count =+ 1;
+            }
+            function clearForm() {
+                document.forms[0].reset();
+                count = 0
+            }
+        </script>
     </body>
 </html>
